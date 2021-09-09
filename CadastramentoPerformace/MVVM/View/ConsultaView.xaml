@@ -1,0 +1,194 @@
+﻿<UserControl
+    x:Class="CadastramentoPerformace.MVVM.View.ConsultaView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ToggleSwitch="clr-namespace:ToggleSwitch;assembly=ToggleSwitch"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:CadastramentoPerformace.MVVM.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="clr-namespace:CadastramentoPerformace.MVVM.ViewModel"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.DataContext>
+        <viewModel:ConsultaViewModel />
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <TextBlock
+                Margin="20,0,0,10"
+                HorizontalAlignment="Left"
+                FontSize="28"
+                Foreground="White"
+                Text="Localidade" />
+            <ComboBox
+                Width="200"
+                Margin="20,0,0,0"
+                HorizontalAlignment="Left"
+                DisplayMemberPath="NomeLocal"
+                ItemsSource="{Binding Localidades, UpdateSourceTrigger=PropertyChanged}"
+                SelectedValue="{Binding CurrentLocalidade}" />
+            <TextBlock
+                Margin="20,0,0,10"
+                HorizontalAlignment="Left"
+                FontSize="28"
+                Foreground="White"
+                Text="Equipe" />
+            <ComboBox
+                Width="200"
+                Margin="20,0,0,0"
+                HorizontalAlignment="Left"
+                DisplayMemberPath="NumeroEquipe"
+                ItemsSource="{Binding Equipes, UpdateSourceTrigger=PropertyChanged}"
+                SelectedValue="{Binding CurrentEquipe}" />
+            <TextBlock
+                Margin="20,0,0,0"
+                HorizontalAlignment="Left"
+                FontSize="28"
+                Foreground="White"
+                Text="OS" />
+            <ListBox
+                Width="220"
+                Height="Auto"
+                Margin="20,0,0,5"
+                HorizontalAlignment="Left"
+                Background="Transparent"
+                ItemsSource="{Binding RadioBtnList}"
+                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                SelectedItem="{Binding SelectedRadioBtn}"
+                Style="{StaticResource RadioButtonListBoxStyle}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+
+            <ComboBox
+                Width="200"
+                Margin="20,0,0,0"
+                HorizontalAlignment="Left"
+                DisplayMemberPath="CodigoOS"
+                ItemsSource="{Binding OS, UpdateSourceTrigger=PropertyChanged}"
+                SelectedValue="{Binding CurrentOS}" />
+
+            <TextBlock
+                Margin="20,0,0,10"
+                HorizontalAlignment="Left"
+                FontSize="28"
+                Foreground="White"
+                Text="Periodo" />
+            <TextBlock
+                Margin="20,0,0,0"
+                HorizontalAlignment="Left"
+                FontSize="15"
+                Foreground="White"
+                Text="Inicio" />
+            <DatePicker
+                Width="200"
+                Margin="20,0,0,0"
+                HorizontalAlignment="Left"
+                SelectedDate="{Binding StartDate}" />
+            <TextBlock
+                Margin="20,10,0,0"
+                HorizontalAlignment="Left"
+                FontSize="15"
+                Foreground="White"
+                Text="Final" />
+            <DatePicker
+                Width="200"
+                Margin="20,0,0,0"
+                HorizontalAlignment="Left"
+                SelectedDate="{Binding EndDate}" />
+            <Button
+                Width="200"
+                Margin="0,10,0,0"
+                Command="{Binding PesquisarCommand}"
+                Content="Pesquisar" />
+
+            <Button
+                Width="200"
+                Margin="0,10,0,0"
+                Command="{Binding ExportarCommand}"
+                CommandParameter="{Binding ElementName=ServicoGrid}"
+                Content="Exportar para Excel" />
+
+
+        </StackPanel>
+        <ListView
+            Width="Auto"
+            Grid.Column="1"
+            Margin="0,20,20,20"
+            Background="#1B1B1B">
+            <DataGrid
+                x:Name="ServicoGrid"
+                Height="Auto"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                ItemsSource="{Binding Servicos, UpdateSourceTrigger=PropertyChanged}">
+                <DataGrid.InputBindings>
+                    <MouseBinding
+                        Command="{Binding ExcluirServicoCommand}"
+                        CommandParameter="{Binding ElementName=ServicoGrid, Path=SelectedItem}"
+                        Gesture="LeftDoubleClick" />
+                </DataGrid.InputBindings>
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="#22202f" />
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="FontWeight" Value="SemiBold" />
+                        <Setter Property="FontSize" Value="14" />
+                        <Setter Property="BorderThickness" Value="0,0,1,2" />
+                        <Setter Property="BorderBrush" Value="White" />
+                    </Style>
+                    <Style TargetType="{x:Type DataGrid}">
+                        <Setter Property="Background" Value="#1B1B1B" />
+                    </Style>
+                </DataGrid.Resources>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Width="80"
+                        Binding="{Binding Data, StringFormat=\{0:dd/MM/yy\}}"
+                        Header="Data" />
+                    <DataGridTextColumn
+                        Width="100"
+                        Binding="{Binding NomeLocal}"
+                        Header="Localidade" />
+                    <DataGridTextColumn
+                        Width="80"
+                        Binding="{Binding CodigoOS}"
+                        Header="Cod. OS" />
+                    <DataGridTextColumn
+                        Width="100"
+                        Binding="{Binding DescricaoOS}"
+                        Header="Desc. OS" />
+                    <DataGridTextColumn
+                        Width="80"
+                        Binding="{Binding NumeroEquipe}"
+                        Header="Nº Equipe" />
+                    <DataGridTextColumn
+                        Width="100"
+                        Binding="{Binding Executor}"
+                        Header="Executor" />
+                    <DataGridTextColumn
+                        Width="100"
+                        Binding="{Binding Quantidade}"
+                        Header="Qtda." />
+                    <DataGridTextColumn
+                        Width="80"
+                        Binding="{Binding TempoExecucao}"
+                        Header="Tempo de Execução" />
+
+
+                </DataGrid.Columns>
+            </DataGrid>
+        </ListView>
+    </Grid>
+</UserControl>

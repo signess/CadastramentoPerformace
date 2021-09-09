@@ -1,0 +1,230 @@
+﻿<UserControl
+    x:Class="CadastramentoPerformace.MVVM.View.CadastramentoView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:CadastramentoPerformace.MVVM.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="clr-namespace:CadastramentoPerformace.MVVM.ViewModel"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <viewModel:CadastramentoViewModel />
+    </UserControl.DataContext>
+    <ScrollViewer>
+        <StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="350" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Margin="0,0,0,20"
+                    HorizontalAlignment="Left"
+                    FontSize="28"
+                    Foreground="White"
+                    Text="Equipes" />
+                <Button
+                    Grid.Column="1"
+                    Width="40"
+                    Height="40"
+                    Margin="10"
+                    HorizontalAlignment="Right"
+                    Background="#22202f"
+                    Command="{Binding AddEquipeCommand}"
+                    Content="+"
+                    FontSize="20"
+                    FontWeight="SemiBold"
+                    Foreground="LightGreen" />
+            </Grid>
+            <Grid Height="200">
+                <DataGrid
+                    x:Name="EquipesGrid"
+                    Width="Auto"
+                    Margin="10,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding EquipesGridLista}">
+                    <DataGrid.InputBindings>
+                        <MouseBinding
+                            Command="{Binding EditEquipeCommand}"
+                            CommandParameter="{Binding ElementName=EquipesGrid, Path=SelectedItem}"
+                            Gesture="LeftDoubleClick" />
+                    </DataGrid.InputBindings>
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="Background" Value="#22202f" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="FontWeight" Value="SemiBold" />
+                            <Setter Property="FontSize" Value="15" />
+                            <Setter Property="BorderThickness" Value="0,0,1,2" />
+                            <Setter Property="BorderBrush" Value="White" />
+                        </Style>
+                        <Style TargetType="{x:Type DataGrid}">
+                            <Setter Property="Background" Value="#1B1B1B" />
+                        </Style>
+                    </DataGrid.Resources>
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn
+                            Width="200"
+                            Binding="{Binding NomeLocal}"
+                            Header="Localidade" />
+                        <DataGridTextColumn
+                            Width="150"
+                            Binding="{Binding NumeroEquipe}"
+                            Header="Número da Equipe" />
+                        <DataGridTemplateColumn Width="*" Header="Executores">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ItemsControl ItemsSource="{Binding ExecutoresList}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="350" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Margin="0,0,0,20"
+                    HorizontalAlignment="Left"
+                    FontSize="28"
+                    Foreground="White"
+                    Text="Ordem de Serviços" />
+                <Button
+                    Grid.Column="1"
+                    Width="40"
+                    Height="40"
+                    Margin="10"
+                    HorizontalAlignment="Right"
+                    Background="#22202f"
+                    Command="{Binding AddOSCommand}"
+                    Content="+"
+                    FontSize="20"
+                    Foreground="LightGreen" />
+            </Grid>
+            <Grid Height="200">
+                <DataGrid
+                    x:Name="OSGrid"
+                    Width="Auto"
+                    Margin="10,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding OSGridLista}">
+                    <DataGrid.InputBindings>
+                        <MouseBinding
+                            Command="{Binding ExcluirOSCommand}"
+                            CommandParameter="{Binding ElementName=OSGrid, Path=SelectedItem}"
+                            Gesture="LeftDoubleClick" />
+                    </DataGrid.InputBindings>
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="Background" Value="#22202f" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="FontWeight" Value="SemiBold" />
+                            <Setter Property="FontSize" Value="15" />
+                            <Setter Property="BorderThickness" Value="0,0,1,2" />
+                            <Setter Property="BorderBrush" Value="White" />
+                        </Style>
+                        <Style TargetType="{x:Type DataGrid}">
+                            <Setter Property="Background" Value="#1B1B1B" />
+                        </Style>
+                    </DataGrid.Resources>
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn
+                            Width="200"
+                            Binding="{Binding CodigoOS}"
+                            Header="Codigo da OS" />
+                        <DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding DescricaoOS}"
+                            Header="Descrição" />
+                        <DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding Improdutivo}"
+                            Header="Improdutivo?" />
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="350" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Margin="0,0,0,20"
+                    HorizontalAlignment="Left"
+                    FontSize="28"
+                    Foreground="White"
+                    Text="Localidades" />
+                <Button
+                    Grid.Column="1"
+                    Width="40"
+                    Height="40"
+                    Margin="10"
+                    HorizontalAlignment="Right"
+                    Background="#22202f"
+                    Command="{Binding AddLocalCommand}"
+                    Content="+"
+                    FontSize="20"
+                    Foreground="LightGreen" />
+            </Grid>
+            <Grid Height="200">
+                <DataGrid
+                    x:Name="LocalGrid"
+                    Width="Auto"
+                    Margin="10,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding LocalidadeGridLista}">
+                    <DataGrid.InputBindings>
+                        <MouseBinding
+                            Command="{Binding ExcluirLocalCommand}"
+                            CommandParameter="{Binding ElementName=LocalGrid, Path=SelectedItem}"
+                            Gesture="LeftDoubleClick" />
+                    </DataGrid.InputBindings>
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="Background" Value="#22202f" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="FontWeight" Value="SemiBold" />
+                            <Setter Property="FontSize" Value="15" />
+                            <Setter Property="BorderThickness" Value="0,0,1,2" />
+                            <Setter Property="BorderBrush" Value="White" />
+                        </Style>
+                        <Style TargetType="{x:Type DataGrid}">
+                            <Setter Property="Background" Value="#1B1B1B" />
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn
+                            Width="200"
+                            Binding="{Binding NomeLocal}"
+                            Header="Localidade" />
+                        <DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding ID}"
+                            Header="Identificador" />
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

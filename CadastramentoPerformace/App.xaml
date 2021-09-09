@@ -1,0 +1,33 @@
+﻿<Application
+    x:Class="CadastramentoPerformace.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:CadastramentoPerformace"
+    xmlns:view="clr-namespace:CadastramentoPerformace.MVVM.View"
+    xmlns:viewModel="clr-namespace:CadastramentoPerformace.MVVM.ViewModel"
+    StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Theme/MenuButtonTheme.xaml" />
+                <ResourceDictionary Source="Theme/TextBoxTheme.xaml" />
+                <ResourceDictionary Source="Theme/PlaceholderTheme.xaml" />
+                <ResourceDictionary Source="Theme/ToggleSwitchStyle.xaml" />
+                <ResourceDictionary Source="Theme/RadioButtonListTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate DataType="{x:Type viewModel:CadastramentoViewModel}">
+                <view:CadastramentoView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:ServicosViewModel}">
+                <view:ServicosView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:ConsultaViewModel}">
+                <view:ConsultaView />
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

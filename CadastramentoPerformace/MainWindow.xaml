@@ -1,0 +1,72 @@
+﻿<Window
+    x:Class="CadastramentoPerformace.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:CadastramentoPerformace"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="clr-namespace:CadastramentoPerformace.MVVM.ViewModel"
+    Width="1020"
+    Height="800"
+    Background="#272537"
+    ResizeMode="CanResize"
+    WindowStyle="SingleBorderWindow"
+    mc:Ignorable="d">
+
+    <Window.DataContext>
+        <viewModel:MainViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+
+            <RadioButton
+                Width="200"
+                Height="50"
+                Command="{Binding ConsultaViewCommand}"
+                Content="Consulta"
+                FontSize="20"
+                Foreground="White"
+                Style="{StaticResource MenuButtonTheme}" />
+
+            <Separator Width="20" Opacity="0" />
+
+            <RadioButton
+                Width="200"
+                Height="50"
+                Command="{Binding ServicosViewCommand}"
+                Content="Serviços"
+                FontSize="20"
+                Foreground="White"
+                IsChecked="True"
+                Style="{StaticResource MenuButtonTheme}" />
+
+            <Separator Width="20" Opacity="0" />
+
+
+            <RadioButton
+                Width="200"
+                Height="50"
+                Command="{Binding CadastramentoViewCommand}"
+                Content="Cadastramento"
+                FontSize="20"
+                Foreground="White"
+                Style="{StaticResource MenuButtonTheme}" />
+
+
+
+
+        </StackPanel>
+
+        <ContentControl
+            Grid.Row="1"
+            Margin="10"
+            Content="{Binding CurrentView}" />
+    </Grid>
+
+</Window>
