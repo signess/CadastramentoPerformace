@@ -3,6 +3,7 @@ using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -139,7 +140,7 @@ namespace CadastramentoPerformace.SQL
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("DB")))
             {
-                var output = connection.Query<Servico>($"SELECT * FROM Servicos").ToList();
+                var output = connection.Query<Servico>($"SELECT * FROM Servicos2").ToList();
                 return output;
             }
         }
@@ -178,7 +179,7 @@ namespace CadastramentoPerformace.SQL
             }
             TimeSpan nDays = new TimeSpan(1,0,0,0);
             DateTime EndData = endData.Add(nDays);
-            query += $" Data BETWEEN '{startData}' AND '{EndData}'";
+            query += " Data BETWEEN '"+startData.ToString("yyyy-MM-dd")+"' AND '"+EndData.ToString("yyyy-MM-dd")+"'";
 
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("DB")))
             {
@@ -228,7 +229,7 @@ namespace CadastramentoPerformace.SQL
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("DB")))
             {
                 Servico novoServico = new Servico { NomeLocal = nomeLocal, CodigoOS = codigoOS, DescricaoOS = descricaoOS, Improdutivo = improdutivo, NumeroEquipe = numeroEquipe, Executor = executor, Data = data, Quantidade=qtda, TempoExecucao = tempoExecucao };
-                connection.Execute("INSERT INTO Servicos (NomeLocal, CodigoOS, DescricaoOS, Improdutivo, NumeroEquipe, Executor, Data, Quantidade, TempoExecucao) VALUES(@NomeLocal, @CodigoOS, @DescricaoOS, @Improdutivo, @NumeroEquipe, @Executor, @Data, @Quantidade, @TempoExecucao)", novoServico);
+                connection.Execute("INSERT INTO Servicos2 (NomeLocal, CodigoOS, DescricaoOS, Improdutivo, NumeroEquipe, Executor, Data, Quantidade, TempoExecucao) VALUES(@NomeLocal, @CodigoOS, @DescricaoOS, @Improdutivo, @NumeroEquipe, @Executor, @Data, @Quantidade, @TempoExecucao)", novoServico);
             }
         }
 
@@ -237,7 +238,7 @@ namespace CadastramentoPerformace.SQL
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("DB")))
             {
                 Servico servico = new Servico { NomeLocal = nomeLocal, CodigoOS = codigoOS, DescricaoOS = descricaoOS, Improdutivo = improdutivo, NumeroEquipe = numeroEquipe, Executor = executor, Data = data, Quantidade = qtda, TempoExecucao = tempoExecucao };
-                var results = await connection.ExecuteAsync("DELETE Servicos Where NomeLocal=@NomeLocal AND CodigoOS = @CodigoOS AND DescricaoOS=@DescricaoOS AND Improdutivo=@Improdutivo AND NumeroEquipe=@NumeroEquipe AND Executor=@Executor AND Data=@Data AND Quantidade=@Quantidade AND TempoExecucao=@TempoExecucao", servico);
+                var results = await connection.ExecuteAsync("DELETE Servicos2 Where NomeLocal=@NomeLocal AND CodigoOS = @CodigoOS AND DescricaoOS=@DescricaoOS AND Improdutivo=@Improdutivo AND NumeroEquipe=@NumeroEquipe AND Executor=@Executor AND Data=@Data AND Quantidade=@Quantidade AND TempoExecucao=@TempoExecucao", servico);
                 if (results > 0) return true;
             }
             return false;

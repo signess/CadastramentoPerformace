@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="Theme/PlaceholderTheme.xaml" />
                 <ResourceDictionary Source="Theme/ToggleSwitchStyle.xaml" />
                 <ResourceDictionary Source="Theme/RadioButtonListTheme.xaml" />
+                <ResourceDictionary Source="Style/GroupHeaderStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:CadastramentoViewModel}">

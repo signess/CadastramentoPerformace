@@ -92,7 +92,9 @@
                 Width="200"
                 Margin="20,0,0,0"
                 HorizontalAlignment="Left"
-                SelectedDate="{Binding StartDate}" />
+                IsTodayHighlighted="True"
+                SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged}"
+                Text="Selecione uma data" />
             <TextBlock
                 Margin="20,10,0,0"
                 HorizontalAlignment="Left"
@@ -103,7 +105,9 @@
                 Width="200"
                 Margin="20,0,0,0"
                 HorizontalAlignment="Left"
-                SelectedDate="{Binding EndDate}" />
+                IsTodayHighlighted="True"
+                SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged}"
+                Text="Selecione uma data" />
             <Button
                 Width="200"
                 Margin="0,10,0,0"
@@ -116,12 +120,18 @@
                 Command="{Binding ExportarCommand}"
                 CommandParameter="{Binding ElementName=ServicoGrid}"
                 Content="Exportar para Excel" />
+            <Button
+                Width="200"
+                Margin="0,10,0,0"
+                Command="{Binding ExportarSumCommand}"
+                CommandParameter="{Binding ElementName=ServicoGrid}"
+                Content="Exportar com soma para Excel" />
 
 
         </StackPanel>
         <ListView
-            Width="Auto"
             Grid.Column="1"
+            Width="Auto"
             Margin="0,20,20,20"
             Background="#1B1B1B">
             <DataGrid
@@ -155,20 +165,21 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn
                         Width="80"
-                        Binding="{Binding Data, StringFormat=\{0:dd/MM/yy\}}"
-                        Header="Data" />
-                    <DataGridTextColumn
-                        Width="100"
-                        Binding="{Binding NomeLocal}"
-                        Header="Localidade" />
-                    <DataGridTextColumn
-                        Width="80"
                         Binding="{Binding CodigoOS}"
                         Header="Cod. OS" />
                     <DataGridTextColumn
                         Width="100"
                         Binding="{Binding DescricaoOS}"
                         Header="Desc. OS" />
+                    <DataGridTextColumn
+                        Width="80"
+                        Binding="{Binding Data, StringFormat=\{0:dd/MM/yy\}}"
+                        Header="Data" />
+                    <DataGridTextColumn
+                        Width="100"
+                        Binding="{Binding NomeLocal}"
+                        Header="Localidade" />
+
                     <DataGridTextColumn
                         Width="80"
                         Binding="{Binding NumeroEquipe}"
